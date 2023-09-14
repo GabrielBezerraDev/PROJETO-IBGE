@@ -2,28 +2,52 @@
   <div class="card" *ngFor="let item of macroRegiaoCard">
     <h2 class="font">Checar as estatística da região {{item.nome}}</h2>
     <hr>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-          <mat-icon>account_circle</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+    <mat-accordion>
+      <form>
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                This is the expansion title
+              </mat-panel-title>
+              <mat-panel-description>
+                This is a summary of the content
+              </mat-panel-description>
+            </mat-expansion-panel-header>
 
-      <mat-form-field>
-        <mat-label>First name</mat-label>
-        <input matInput>
-      </mat-form-field>
+            <mat-form-field>
+              <mat-label>Toppings</mat-label>
+              <mat-select formControlName="select" (valueChange)="setSelectValue()">
+                <mat-select-trigger>
+                  {{ selectValue || ''}}
+                  <span *ngIf="(pesquisas.length || 0) > 1" class="example-additional-selection">
+                    (+{{(pesquisas.length || 0) - 1}} {{pesquisas.length === 2 ? 'outro' : 'outros'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let problema of pesquisas"  [value]="problema.nome">{{problema.nome}}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Age</mat-label>
-        <input matInput type="number" min="1">
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select>
+            </mat-select>
+          </mat-form-field>
+        </mat-expansion-panel>
+      </form>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Self aware panel
+          </mat-panel-title>
+          <mat-panel-description>
+            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+    </mat-accordion>
 
-    </mat-expansion-panel>
   </div>
 </div>
 
