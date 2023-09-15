@@ -3,7 +3,7 @@
     <h2 class="font">Checar as estatística da região {{item.nome}}</h2>
     <hr>
     <mat-accordion>
-      <form>
+      <form [formGroup]="formIBGE">
         <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -15,21 +15,22 @@
             </mat-expansion-panel-header>
 
             <mat-form-field>
-              <mat-label>Toppings</mat-label>
-              <mat-select formControlName="select" (valueChange)="setSelectValue()">
+              <mat-label>Selecione o problema</mat-label>
+              <mat-select formControlName="select" (valueChange)="ableInput()" multiple>
                 <mat-select-trigger>
-                  {{ selectValue || ''}}
-                  <span *ngIf="(pesquisas.length || 0) > 1" class="example-additional-selection">
-                    (+{{(pesquisas.length || 0) - 1}} {{pesquisas.length === 2 ? 'outro' : 'outros'}})
+                  {{selectArray[0] || ''}}
+                  <span *ngIf="(selectArray.length || 0) > 1" class="example-additional-selection">
+                    (+{{(selectArray.length || 0) - 1}} {{selectArray.length === 2 ? 'outro' : 'outros'}})
                   </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let problema of pesquisas"  [value]="problema.nome">{{problema.nome}}</mat-option>
+                <mat-option *ngFor="let selectValue of pesquisas" [value]="selectValue.nome">{{selectValue.nome}}</mat-option>
               </mat-select>
             </mat-form-field>
 
+
           <mat-form-field>
             <mat-label>Favorite food</mat-label>
-            <mat-select>
+            <mat-select formControlName="estado">
             </mat-select>
           </mat-form-field>
         </mat-expansion-panel>

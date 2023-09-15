@@ -7,6 +7,7 @@ import { MacroRegiaoComponent } from './macro-regiao/macro-regiao.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedAngularMaterialModule } from 'src/shared/interfaces/style/shared-angular-material/shared-angular-material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedAngularMaterialModule } from 'src/shared/interfaces/style/shared-
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedAngularMaterialModule
+    SharedAngularMaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

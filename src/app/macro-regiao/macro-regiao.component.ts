@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MacroRegiaoService } from 'src/service/MacroRegiao.service';
 import { PesquisaService } from 'src/service/Pesquisa.service';
 import { MacroRegiao } from 'src/shared/interfaces/MacroRegiao';
@@ -16,7 +16,7 @@ public macroRegiaoCard: Array<MacroRegiao> = [];
 public pesquisas: Array<Pesquisa> = [];
 public panelOpenState = false;
 public formIBGE: FormGroup;
-public selectValue: string;
+public selectArray: Array<string> = [];
 
 constructor(
   private macroRegiao: MacroRegiaoService,
@@ -34,8 +34,10 @@ ngOnInit(): void {
 
 public initForm():void{
   this.formIBGE = this.formBuilder.group({
-    select:['krl']
+    select:'',
+    estado:['']
   });
+  this.formIBGE.get("estado")?.disable();
 }
 
 
@@ -57,9 +59,11 @@ public getPesquisa():void{
   });
 }
 
-public setSelectValue():void{
+public ableInput():void{
+  this.selectArray = this.formIBGE.get("select")?.value;
+  this.selectArray ?  this.formIBGE.get("estado")?.enable() : this.formIBGE.get("estado")?.disable();
+  console.log(this.selectArray);
   console.log(this.formIBGE.get("select")?.value);
-  this.selectValue = this.formIBGE.get("select")?.value;
 }
 
 }
