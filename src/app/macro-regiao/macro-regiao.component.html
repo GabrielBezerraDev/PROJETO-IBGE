@@ -1,6 +1,6 @@
 <div class="page">
-  <div class="card" *ngFor="let item of macroRegiaoCard">
-    <h2 class="font">Checar as estatística da região {{item.nome}}</h2>
+  <div class="card" *ngFor="let regiao of macroRegiaoCard">
+    <h2 class="font">Checar as estatística da região {{regiao.nome}}</h2>
     <hr>
     <mat-accordion>
       <form [formGroup]="formIBGE">
@@ -14,25 +14,41 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
 
+            <input formControlName="regiao" hidden [value]="regiao.id">
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Favorite food</mat-label>
+              <input matInput formControlName="teste" (input)="teste()">
+            </mat-form-field>
+
             <mat-form-field>
-              <mat-label>Selecione o problema</mat-label>
-              <mat-select formControlName="select" (valueChange)="ableInput()" multiple>
-                <mat-select-trigger>
-                  {{selectArray[0] || ''}}
-                  <span *ngIf="(selectArray.length || 0) > 1" class="example-additional-selection">
-                    (+{{(selectArray.length || 0) - 1}} {{selectArray.length === 2 ? 'outro' : 'outros'}})
-                  </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let selectValue of pesquisas" [value]="selectValue.nome">{{selectValue.nome}}</mat-option>
+              <mat-label>Selecione o agregado</mat-label>
+              <mat-select formControlName="agregado" (selectionChange)="setProblemas()">
+                <mat-option [disabled]="formIBGE.get('agregado')?.valid ? false : true" [value]="" >
+                  Selecione um valor
+                </mat-option>
+                <mat-option *ngFor="let pesquisa of pesquisas" [value]="pesquisa.agregados">
+                  {{pesquisa.nome}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
 
+
+          <mat-form-field>
+            <mat-label>Selecione problema</mat-label>
+            <mat-select formControlName="problema" [disabled]="formIBGE.get('agregado')?.valid ? false : true">
+              <!-- <mat-option *ngFor="let pesquisa of convertArray(formIBGE.get('problema')?.value)" >
+                {{pesquisa}}
+              </mat-option> -->
+            </mat-select>
+          </mat-form-field>
 
           <mat-form-field>
             <mat-label>Favorite food</mat-label>
             <mat-select formControlName="estado">
             </mat-select>
           </mat-form-field>
+
         </mat-expansion-panel>
       </form>
       <mat-expansion-panel (opened)="panelOpenState = true"
