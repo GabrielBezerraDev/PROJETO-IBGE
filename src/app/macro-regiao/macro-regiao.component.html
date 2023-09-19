@@ -1,6 +1,6 @@
 <div class="page">
-  <div class="card" *ngFor="let regiao of macroRegiaoCard">
-    <h2 class="font">Checar as estatística da região {{regiao.nome}}</h2>
+  <div class="card">
+    <h2 class="font">Checar as estatística da região</h2>
     <hr>
     <mat-accordion>
       <form [formGroup]="formIBGE">
@@ -14,19 +14,18 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <input formControlName="regiao" hidden [value]="regiao.id">
-
-            <mat-form-field class="example-full-width">
-              <mat-label>Favorite food</mat-label>
-              <input matInput formControlName="teste" (input)="teste()">
+            <mat-form-field>
+              <mat-label>Selecione a Região</mat-label>
+              <mat-select  formControlName="regiao" (selectionChange)="actived('agregado')">
+                <mat-option *ngFor="let regiao of macroRegiaoCard" [value]="regiao.id">
+                  {{regiao.nome}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Selecione o agregado</mat-label>
-              <mat-select formControlName="agregado" (selectionChange)="setProblemas()">
-                <mat-option [disabled]="formIBGE.get('agregado')?.valid ? false : true" [value]="" >
-                  Selecione um valor
-                </mat-option>
+              <mat-select formControlName="agregado"  (selectionChange)="[setProblemas(),actived('problema')]">
                 <mat-option *ngFor="let pesquisa of pesquisas" [value]="pesquisa.agregados">
                   {{pesquisa.nome}}
                 </mat-option>
@@ -36,18 +35,27 @@
 
           <mat-form-field>
             <mat-label>Selecione problema</mat-label>
-            <mat-select formControlName="problema" [disabled]="formIBGE.get('agregado')?.valid ? false : true">
-              <!-- <mat-option *ngFor="let pesquisa of convertArray(formIBGE.get('problema')?.value)" >
-                {{pesquisa}}
-              </mat-option> -->
+            <mat-select formControlName="problema" (selectionChange)="getPeriodos()">
+              <mat-option *ngFor="let problema of problemas" [value]="problema.id">
+                {{problema.id}} - {{problema.nome}}.
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>Selecione o periodo</mat-label>
+            <mat-select formControlName="problema" >
+              <mat-option *ngFor="let periodo of periodos" [value]="periodo.id">
+                {{periodo.literals}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- <mat-form-field>
             <mat-label>Favorite food</mat-label>
             <mat-select formControlName="estado">
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
 
         </mat-expansion-panel>
       </form>

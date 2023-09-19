@@ -7,14 +7,10 @@ import { Pesquisa } from 'src/shared/interfaces/Pesquisa';
   providedIn: 'root'
 })
 
-export class PesquisaService {
-
-constructor(
-  private http: HttpService
-) { }
+export class PesquisaService extends HttpService {
 
 public getPesquisas():Observable<Array<Pesquisa>>{
-  return this.http.getHttp().get<Array<Pesquisa>>("https://servicodados.ibge.gov.br/api/v3/agregados");
+  return this.getHttp().get<Array<Pesquisa>>("https://servicodados.ibge.gov.br/api/v3/agregados");
 }
 
 }

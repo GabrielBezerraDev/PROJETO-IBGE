@@ -4,14 +4,10 @@ import { HttpService } from './Http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RegiãoService {
-
-constructor(
-  private http: HttpService
-) { }
+export class RegiãoService extends HttpService{
 
 public getRegiao():void{
-  this.http.getHttp().get
+  this.getHttp().get
 }
 
 }
